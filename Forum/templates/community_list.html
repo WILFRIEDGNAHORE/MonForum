@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Communautés{% endblock %}
+
+{% block content %}
+    <h1>Communautés</h1>
+    <ul class="list-group">
+        {% for community in communities %}
+            <li class="list-group-item">
+                <a href="{% url 'post_list' community.id %}">{{ community.name }}</a>
+                <p>{{ community.description }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

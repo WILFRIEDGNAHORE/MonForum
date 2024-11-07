@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>Commentaires</h3>
+{% if post.comments.all %}
+    <ul class="list-group">
+        {% for comment in post.comments.all %}
+            <li class="list-group-item">
+                <strong>{{ comment.user.username }}</strong> a dit :
+                <p>{{ comment.content }}</p>
+                <small>Posté le {{ comment.created_at }}</small>
+
+                {% if comment.parent %}
+                    <p class="text-muted">Répondu à : {{ comment.parent.user.username }} - "{{ comment.parent.content }}"</p>
+                {% endif %}
+
+                <!-- Afficher les boutons de vote uniquement si l'utilisateur est connecté -->
+                {% if user.is_authenticated %}
+                    <div>
+                        <button class="btn btn-success" onclick="location.href='{% url 'vote_up_comment' comment.id %}'">Voter Positif</button>
+                        <button class="btn btn-danger" onclick="location.href='{% url 'vote_down_comment' comment.id %}'">Voter Négatif</button>
+                    </div>
+                {% else %}
+                    <p>Vous devez être connecté pour voter.</p>
+                {% endif %}
+                
+                <p>Votes Positifs: {{ comment.upvotes }}</p>
+                <p>Votes Négatifs: {{ comment.downvotes }}</p>
+
+                {% if comment.replies.all %}
+                    <ul class="list-group mt-2">
+                        {% for reply in comment.replies.all %}
+                            <li class="list-group-item">
+                                <strong>{{ reply.user.username }}</strong> a répondu :
+                                <p>{{ reply.content }}</p>
+                                <small>Posté le {{ reply.created_at }}</small>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                
+                {% if user.is_authenticated %}
+                    <form method="POST" action="{% url 'reply_comment' comment.id %}">
+                        {% csrf_token %}
+                        <textarea name="content" class="form-control" placeholder="Répondre..."></textarea>
+                        <button type="submit" class="btn btn-primary mt-2">Répondre</button>
+                    </form>
+                {% else %}
+                    <p>Vous devez être connecté pour répondre.</p>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Pas encore de commentaires.</p>
+    {% if user.is_authenticated %}
+        <form method="POST" action="{% url 'add_comment' post.id %}">
+            {% csrf_token %}
+            <textarea name="content" class="form-control" placeholder="Ajouter un commentaire..."></textarea>
+            <button type="submit" class="btn btn-primary mt-2">Ajouter un commentaire</button>
+        </form>
+    {% else %}
+        <p>Vous devez être connecté pour ajouter un commentaire.</p>
+    {% endif %}
+{% endif %}
+{% endblock %}

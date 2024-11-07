@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Se connecter{% endblock %}
+
+{% block content %}
+    <h1>Se connecter</h1>
+    
+    {% if messages %}
+        <div class="alert alert-danger">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <!-- Champ pour le nom d'utilisateur -->
+        <div class="form-group">
+            <label for="username">Nom d'utilisateur</label>
+            <input type="text" id="username" name="username" class="form-control" required>
+        </div>
+        
+        <!-- Champ pour le mot de passe -->
+        <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" name="password" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Se connecter</button>
+    </form>
+{% endblock %}
