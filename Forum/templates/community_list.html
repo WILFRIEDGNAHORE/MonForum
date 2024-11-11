@@ -3,12 +3,15 @@
 {% block title %}Communautés{% endblock %}
 
 {% block content %}
-    <h1>Communautés</h1>
+    <h1><i class="fas fa-users"></i> Communautés</h1>
     <ul class="list-group">
         {% for community in communities %}
-            <li class="list-group-item">
-                <a href="{% url 'post_list' community.id %}">{{ community.name }}</a>
-                <p>{{ community.description }}</p>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <a href="{% url 'post_list' community.id %}" class="h5">{{ community.name }}</a>
+                    <p>{{ community.description }}</p>
+                </div>
+                <i class="fas fa-chevron-right text-muted"></i>
             </li>
         {% endfor %}
     </ul>

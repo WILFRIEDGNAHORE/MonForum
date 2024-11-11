@@ -5,25 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Mon Application{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Custom styles for a more Reddit-inspired look */
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #ff4500;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: white !important;
+        }
+        .list-group-item {
+            border: none;
+            border-bottom: 1px solid #ddd;
+        }
+        .list-group-item a {
+            color: #007bff;
+            font-weight: 600;
+        }
+        .list-group-item p {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        .pagination .page-link {
+            color: #ff4500;
+        }
+        .btn-primary {
+            background-color: #ff4500;
+            border-color: #ff4500;
+        }
+        footer {
+            background-color: #343a40;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% url 'community_list' %}">BricoIvoire</a>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="{% url 'community_list' %}"><i class="fas fa-hammer"></i> BricoIvoire</a>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'community_list' %}">home</a>
+                    <a class="nav-link" href="{% url 'community_list' %}"><i class="fas fa-users"></i> Communautés</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'all_post_list' %}"><i class="fas fa-list"></i> Liste post</a>
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Se déconnecter</a>
+                        <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Se déconnecter</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Se connecter</a>
+                        <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Se connecter</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'register' %}">S'inscrire</a>
+                        <a class="nav-link" href="{% url 'register' %}"><i class="fas fa-user-plus"></i> S'inscrire</a>
                     </li>
                 {% endif %}
             </ul>
@@ -35,7 +75,7 @@
         {% endblock %}
     </div>
 
-    <footer class="bg-dark text-white text-center py-3 mt-4">
+    <footer class="text-white text-center py-3 mt-4">
         &copy; 2024 Mon Application - Tous droits réservés
     </footer>
 </body>

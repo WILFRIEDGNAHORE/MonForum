@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ community.name }} - Posts{% endblock %}
+{% block title %}Tous les Posts{% endblock %}
 
 {% block content %}
-    <h1><i class="fas fa-comments"></i> {{ community.name }}</h1>
-    <p>{{ community.description }}</p>
+    <h1><i class="fas fa-comments"></i> Tous les Posts</h1>
 
     {% if user.is_authenticated %}
-        <a href="{% url 'create_post' community.id %}" class="btn btn-primary mb-3"><i class="fas fa-pencil-alt"></i> Créer un post</a>
+        <p><i class="fas fa-info-circle"></i> Vous devez être dans une communauté pour créer un post.</p>
     {% else %}
         <p><i class="fas fa-info-circle"></i> Vous devez être connecté pour créer un post.</p>
     {% endif %}
@@ -21,25 +20,12 @@
                         <span class="badge badge-secondary"><i class="fas fa-arrow-up"></i> {{ post.upvotes }}</span>
                     </div>
                     <p class="mb-1">{{ post.content|truncatewords:20 }}</p>
-                    <small class="text-muted">Posté le : {{ post.created_at|date:"d/m/Y H:i" }}</small>
-
-                    {% if user.is_authenticated and post.author == user %}
-                        <!-- Bouton Modifier -->
-                        <a href="{% url 'edit_post' post.id %}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Modifier</a>
-                        
-                        <!-- Bouton Supprimer -->
-                        <form action="{% url 'delete_post' post.id %}" method="POST" style="display:inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce post ?')">
-                                <i class="fas fa-trash-alt"></i> Supprimer
-                            </button>
-                        </form>
-                    {% endif %}
+                    <small class="text-muted">Posté le : {{ post.created_at|date:"d/m/Y H:i" }} dans la communauté "{{ post.community.name }}"</small>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <p><i class="fas fa-exclamation-circle"></i> Aucun post n'a été trouvé dans cette communauté.</p>
+        <p><i class="fas fa-exclamation-circle"></i> Aucun post n'a été trouvé.</p>
     {% endif %}
 
     <!-- Pagination Controls -->

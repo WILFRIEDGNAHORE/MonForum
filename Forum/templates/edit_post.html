@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 
-{% block title %}Créer un post{% endblock %}
+{% block title %}Modifier un post{% endblock %}
 
 {% block content %}
     <div class="container mt-5">
         <h1 class="display-4 text-center text-primary mb-4">
-            <i class="fas fa-pencil-alt"></i> Créer un post dans {{ community.name }}
+            <i class="fas fa-pencil-alt"></i> Modifier un post dans {{ community.name }}
         </h1>
 
         <div class="card shadow-lg border-light">
@@ -43,10 +43,9 @@
                         {{ form.community|add_class:"form-control" }}
                     </div>
 
-                    <button type="submit" class="btn btn-success btn-lg btn-block mt-4">
-                        <i class="fas fa-plus-circle"></i> Créer le post
-                    </button>
+                    <button type="submit" class="btn btn-primary">Mettre à jour</button>
                 </form>
+                <a href="{% url 'post_detail' post.id %}" class="btn btn-secondary">Annuler</a>
             </div>
         </div>
     </div>
